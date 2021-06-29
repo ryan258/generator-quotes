@@ -15,21 +15,19 @@ const loader = document.getElementById('loader')
 
 let apiQuotes = []
 
-// Show loading
-function loading() {
+function showLoadingSpinner() {
   loader.hidden = false
   quoteContainer.hidden = true
 }
 
-// Hide loading
-function complete() {
+function hideLoadingSpinner() {
   loader.hidden = true
   quoteContainer.hidden = false
 }
 
 // Show new quote
 function newQuote() {
-  loading()
+  showLoadingSpinner()
   // pick random quote from apiQuotes array
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)]
 
@@ -42,13 +40,13 @@ function newQuote() {
 
   authorText.textContent = quote.author || 'Unknown 🤔'
   quoteText.textContent = quote.text
-  // Hide spinner, show quote
-  complete()
+
+  hideLoadingSpinner()
 }
 
 // Get quotes from API
 async function getQuotes() {
-  loading()
+  showLoadingSpinner()
   const apiUrl = 'https://type.fit/api/quotes'
   try {
     const response = await fetch(apiUrl)
