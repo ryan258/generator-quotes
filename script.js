@@ -11,11 +11,25 @@ const quoteText = document.getElementById('quote')
 const authorText = document.getElementById('author')
 const twitterBtn = document.getElementById('twitter')
 const newQuoteBtn = document.getElementById('new-quote')
+const loader = document.getElementById('loader')
 
 let apiQuotes = []
 
+// Show loading
+function loading() {
+  loader.hidden = false
+  quoteContainer.hidden = true
+}
+
+// Hide loading
+function complete() {
+  loader.hidden = true
+  quoteContainer.hidden = false
+}
+
 // Show new quote
 function newQuote() {
+  loading()
   // pick random quote from apiQuotes array
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)]
 
@@ -28,10 +42,13 @@ function newQuote() {
 
   authorText.textContent = quote.author || 'Unknown 🤔'
   quoteText.textContent = quote.text
+  // Hide spinner, show quote
+  complete()
 }
 
 // Get quotes from API
 async function getQuotes() {
+  loading()
   const apiUrl = 'https://type.fit/api/quotes'
   try {
     const response = await fetch(apiUrl)
